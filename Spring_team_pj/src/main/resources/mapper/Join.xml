@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.empmanage.hotel.service.dao.JoinDAO">
+
+	<resultMap type="com.empmanage.hotel.vo.HtdateVO" id="HtdateVOMap">
+		<id property="renum" column="renum" /> <!-- pk -->
+		<id property="cin" column="cin" />
+		<id property="cout" column="cout" />
+		<id property="pep" column="pep" />
+		<id property="email" column="email" /> <!-- fk -->
+	</resultMap>
+	
+	<resultMap type="com.empmanage.hotel.vo.HoteltbVO" id="HoteltbVOMap" >
+		<id property="renum" column="renum" /> <!-- fk -->
+		<id property="region" column="region" />	
+		<id property="hname" column="hname" />	
+	</resultMap>
+
+	<resultMap type="com.empmanage.hotel.vo.HtloginVO" id="HtloginVOMap" >
+
+		<id property="name" column="name" />	
+		<id property="email" column="email" />	<!-- pk -->
+		<id property="tel" column="tel" />	
+	</resultMap>
+
+
+	<resultMap type="com.empmanage.hotel.vo.JoinVO" id="JoinVOMap" >
+		<collection property="hoteltbVO" resultMap="HoteltbVOMap" />
+		<collection property="htdateVO" resultMap="HtdateVOMap" />
+		<collection property="htloginVO" resultMap="HtloginVOMap" />
+	</resultMap>
+	
+	<select id="getReservationDetail" resultMap="JoinVOMap">
+		select d.renum,h.region,h.hname,l.name,d.email,l.tel,d.cin,d.cout,d.pep
+		from htdate d,htlogin l ,hoteltb h
+		where l.email = d.email and h.renum=d.renum and d.email = #{email}
+	</select>
+	
+	<select id="getAdminReservationDetail" resultMap="JoinVOMap">
+		select d.renum,h.region,h.hname,l.name,d.email,l.tel,d.cin,d.cout,d.pep
+		from htdate d,htlogin l ,hoteltb h
+		where l.email = d.email and h.renum=d.renum 
+	</select>
+	
+	<select id="editReservation" resultMap="JoinVOMap">
+		select d.renum,h.region,h.hname,l.name,d.email,l.tel,d.cin,d.cout,d.pep
+		from htdate d,htlogin l ,hoteltb h
+		where l.email = d.email and h.renum=d.renum and d.renum = #{renum}
+	</select>
+	
+	<delete id="delReservationInfo">
+		delete from htdate where renum= #{srenum}
+	</delete>
+	
+	<update id="editReservationInfo">
+		update Htdate set cin = #{cin},cout=#{cout},pep=#{pep}  where renum=#{srenum}
+	</update>
+
+</mapper>

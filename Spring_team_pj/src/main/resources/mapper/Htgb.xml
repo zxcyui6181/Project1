@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+
+<mapper namespace="com.empmanage.hotel.service.dao.HtgbDAO">
+
+	 <select id="getAllGb" resultType="HtgbVO">
+		SELECT num, tit, name, tda, nayoung, cou
+		FROM htgb
+		order by num
+	</select>
+	
+	<insert id="insertWriting">
+		INSERT INTO HTgb(num,tit,name,tda,nayoung,cou)
+		VALUES (numAssign.nextval,#{tit},#{name},#{tda},#{nayoung},#{cou})
+	</insert>
+	
+	<select id="reviewRe" resultType="HtgbVO">
+		SELECT * 
+		from htgb 
+		where tit=#{tit}
+			
+	</select>
+	
+	<update id="plusCou">
+		update HTgb 
+		set cou = cou + 1 
+		where tit=#{tit}
+	</update>
+
+	<select id="reviewEdit" resultType="HtgbVO">
+		SELECT * 
+		from htgb 
+		where tit=#{tit}
+			
+	</select>
+	
+	<update id="reviewModify">
+		update HTgb
+		set tit=#{tit}, name=#{name}, tda=#{tda}, nayoung=#{nayoung}  
+		where tit=#{stit}
+	</update>
+	
+	<delete id="delReviewInfo">
+		DELETE 
+		FROM HTgb
+		WHERE tit=#{tit}
+	</delete>
+
+</mapper>
