@@ -1,0 +1,110 @@
+
+
+--로그인DB
+drop table HTLogin;
+create table HTLogin (
+    name  VARCHAR2(20) not null,
+    email VARCHAR2(20) not null,
+    passw VARCHAR2(20) not null,
+    tel VARCHAR2(13) not null,
+    admin varchar2(2) default 'n' not null,
+    constraints team_email_pk PRIMARY KEY (email)
+);
+insert into HTLogin values ('관리자','admin@naver.com','1234','010-1234-5678', 'y');
+commit;
+
+
+--날짜정보DB
+drop table HTdate;
+create table HTdate (
+    renum NUMBER(6),
+    email VARCHAR2(20), 
+    cin DATE, 
+    cout DATE,
+    pep NUMBER(13),
+    constraints team_renum_pk PRIMARY KEY (renum),
+    constraints  team_email_fk foreign key (email) references htlogin (email)
+);
+commit;
+
+--호텔정보DB
+drop table hoteltb;
+create table hoteltb(
+    renum  NUMBER(6),
+    region varchar2(30) not null,
+    hname varchar2(30) not null,
+    roomsize varchar2(30) not null,
+    price varchar2(30) not null,
+    constraints  team_renum_fk foreign key (renum) references HTdate (renum)
+);
+
+insert into hoteltb values('','서울', '워커힐호텔', '트윈룸', '94000');
+insert into hoteltb values('','서울', '워커힐호텔', '더블룸', '11000');
+insert into hoteltb values('','서울', '워커힐호텔', '스위트룸', '15000');
+
+
+insert into hoteltb values('','서울', '신라스테이호텔', '트윈룸', '98000');
+insert into hoteltb values('','서울', '신라스테이호텔', '더블룸', '11700');
+insert into hoteltb values('','서울', '신라스테이호텔', '스위트룸', '135000');
+
+insert into hoteltb values('','강원도', '세인트존스호텔', '트윈룸', '98800');
+insert into hoteltb values('','강원도', '세인트존스호텔', '더블룸', '128000');
+insert into hoteltb values('','강원도', '세인트존스호텔', '스위트룸', '145000');
+
+insert into hoteltb values('','강원도', '스카이베이호텔', '트윈룸', '99000');
+insert into hoteltb values('','강원도', '스카이베이호텔', '더블룸', '119000');
+insert into hoteltb values('','강원도', '스카이베이호텔', '스위트룸', '129000');
+
+insert into hoteltb values('','부산', '롯데호텔', '트윈룸', '87900');
+insert into hoteltb values('','부산', '롯데호텔', '더블룸', '107900');
+insert into hoteltb values('','부산', '롯데호텔', '스위트룸', '139000');
+
+insert into hoteltb values('','부산', '파라다이스호텔', '트윈룸', '98000');
+insert into hoteltb values('','부산', '파라다이스호텔', '더블룸', '118000'); 
+insert into hoteltb values('','부산', '파라다이스호텔', '스위트룸', '148000');
+
+
+select * from hoteltb;
+commit;
+
+
+--예약번호 시퀀스
+DROP SEQUENCE renumAssign;
+CREATE SEQUENCE renumAssign   -- 시퀀스명
+    MINVALUE 1000   -- 최소값
+    MAXVALUE 10000  -- 최대값
+    INCREMENT BY 10 -- 증감값
+    START WITH 1010 -- 시작값
+    NOCACHE
+    NOORDER
+    NOCYCLE;
+
+    commit;
+
+--게시판 시퀀스
+DROP SEQUENCE numAssign;
+CREATE SEQUENCE numAssign   -- 시퀀스명
+    MINVALUE 1   -- 최소값
+    MAXVALUE 10000  -- 최대값
+    INCREMENT BY 1 -- 증감값
+    START WITH 1 -- 시작값
+    NOCACHE
+    NOORDER
+    NOCYCLE;
+
+//게시판DB
+drop table HTgb;
+create table HTgb (
+    num        number(5) NOT NULL,
+    tit       VARCHAR2(100) NOT NULL,
+    name       VARCHAR2(20) NOT NULL,
+    tda         date,
+    nayoung  VARCHAR2(1000) NOT NULL,
+    cou      number(5)  NOT NULL
+);
+
+commit;
+
+
+
+
